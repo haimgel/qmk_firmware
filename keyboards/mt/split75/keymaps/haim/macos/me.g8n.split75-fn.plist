@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Remaps F21 to the macOS fn key at login; the split75 thumb key sends F21.
+  System-wide, and also reaches keyboards connected later, so the keyboard need not be present at login.
+  Built-in Mac keyboards have no F21, so they are unaffected.
+  Install: cp to ~/Library/LaunchAgents/, then launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/me.g8n.split75-fn.plist
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>me.g8n.split75-fn</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/bin/hidutil</string>
+        <string>property</string>
+        <string>--set</string>
+        <!-- 0x700000070 = Keyboard page F21; 0xFF00000003 = AppleVendor Top Case fn -->
+        <string>{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":0x700000070,"HIDKeyboardModifierMappingDst":0xFF00000003}]}</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
